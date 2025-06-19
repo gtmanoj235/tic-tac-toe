@@ -41,6 +41,9 @@ export default function Home() {
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
+      // Load initial data
+      loadAvailableGames();
+      loadGameHistory();
     }
   }, []);
 
@@ -124,6 +127,9 @@ export default function Home() {
     setToken(userToken);
     localStorage.setItem('token', userToken);
     localStorage.setItem('user', JSON.stringify(userData));
+    // Load initial data after login
+    loadAvailableGames();
+    loadGameHistory();
   };
 
   const handleLogout = () => {

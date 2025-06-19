@@ -10,7 +10,16 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
     "db:studio": "prisma studio",
-    "postinstall": "prisma generate"
+    "db:seed": "prisma db seed",
+    "db:reset": "prisma migrate reset",
+    "postinstall": "prisma generate",
+    "docker:build": "docker build -t tic-tac-toe .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env.local tic-tac-toe",
+    "docker:compose": "docker-compose up -d",
+    "docker:compose:down": "docker-compose down",
+    "deploy:vercel": "vercel --prod",
+    "deploy:railway": "railway up",
+    "health": "curl http://localhost:3000/api/health"
   },
   "dependencies": {
     "@prisma/client": "^6.10.1",
@@ -33,5 +42,8 @@
     "eslint-config-next": "15.3.4",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

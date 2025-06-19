@@ -1,37 +1,30 @@
-# Multi-Player Tic Tac Toe
+# 🎮 Tic Tac Toe - Multiplayer Game
 
-A real-time multi-player Tic Tac Toe game built with Next.js, TypeScript, and Prisma.
+A real-time multiplayer Tic Tac Toe game built with Next.js, TypeScript, Prisma, and PostgreSQL.
 
-## Features
+## ✨ Features
 
-- 🔐 User authentication with JWT
-- 🎮 Real-time multi-player gameplay
-- 📱 Responsive design
-- 🔄 Auto-refresh game state
-- 📊 Game history tracking
-- 🏆 Win/draw detection
-- ⚡ Real-time synchronization
+- 🔐 **User Authentication** - Secure JWT-based authentication
+- 🎯 **Real-time Gameplay** - Live game updates with polling
+- 👥 **Multiplayer Support** - Create and join games with other players
+- 📊 **Game History** - Track your past games and results
+- 🎨 **Modern UI** - Beautiful, responsive design with Tailwind CSS
+- 🔒 **Security** - Password hashing, JWT tokens, and security headers
+- 📱 **Mobile Friendly** - Responsive design for all devices
 
-## Tech Stack
-
-- **Frontend:** Next.js 15, React 19, TypeScript, Tailwind CSS
-- **Backend:** Next.js API Routes
-- **Database:** SQLite (development), PostgreSQL (production)
-- **Authentication:** JWT with bcrypt
-- **ORM:** Prisma
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
 - Node.js 18+ 
+- PostgreSQL database
 - npm or yarn
 
 ### Local Development
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/yourusername/tic-tac-toe.git
    cd tic-tac-toe
    ```
 
@@ -42,108 +35,214 @@ A real-time multi-player Tic Tac Toe game built with Next.js, TypeScript, and Pr
 
 3. **Set up environment variables**
    ```bash
-   cp .env.local.example .env.local
-   ```
-   
-   Add your JWT secret:
-   ```
-   JWT_SECRET="your-super-secret-jwt-key-change-this-in-production"
+   cp env.example .env.local
+   # Edit .env.local with your configuration
    ```
 
 4. **Set up the database**
    ```bash
-   npx prisma migrate dev
+   npm run db:generate
+   npm run db:migrate
+   npm run db:seed  # Optional: adds test users
    ```
 
-5. **Run the development server**
+5. **Start the development server**
    ```bash
    npm run dev
    ```
 
 6. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## Deployment
-
-### Option 1: Vercel (Recommended)
-
-1. **Push your code to GitHub**
-   ```bash
-   git add .
-   git commit -m "Initial commit"
-   git push origin main
+   ```
+   http://localhost:3000
    ```
 
-2. **Deploy to Vercel**
-   - Go to [vercel.com](https://vercel.com)
-   - Sign up with your GitHub account
-   - Click "New Project"
-   - Import your repository
-   - Configure environment variables:
-     - `JWT_SECRET`: Your JWT secret key
-     - `DATABASE_URL`: Your PostgreSQL connection string
-   - Deploy!
+### Test Users (if seeded)
+- **Admin**: username: `admin`, password: `admin123`
+- **Test User**: username: `testuser`, password: `test123`
 
-3. **Set up PostgreSQL database**
-   - Use Vercel Postgres or any PostgreSQL provider
-   - Update `DATABASE_URL` in Vercel environment variables
-   - Run migrations: `npx prisma migrate deploy`
+## 🚀 Production Deployment
 
-### Option 2: Railway
+### Quick Deploy Options
 
-1. **Deploy to Railway**
-   - Go to [railway.app](https://railway.app)
-   - Connect your GitHub repository
-   - Add PostgreSQL database
-   - Set environment variables
-   - Deploy!
+1. **Vercel (Recommended)**
+   ```bash
+   npm i -g vercel
+   vercel --prod
+   ```
 
-### Option 3: Render
+2. **Railway**
+   ```bash
+   npm i -g @railway/cli
+   railway login
+   railway up
+   ```
 
-1. **Deploy to Render**
-   - Go to [render.com](https://render.com)
-   - Create a new Web Service
-   - Connect your GitHub repository
-   - Add PostgreSQL database
-   - Set environment variables
-   - Deploy!
+3. **Docker**
+   ```bash
+   npm run docker:compose
+   ```
 
-## Environment Variables
+4. **Manual Deployment**
+   ```bash
+   ./deploy.sh
+   ```
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `JWT_SECRET` | Secret key for JWT tokens | Yes |
-| `DATABASE_URL` | Database connection string | Yes (production) |
+### Environment Variables
 
-## Database Setup
+Create a `.env.local` file with:
 
-### Development (SQLite)
-The app uses SQLite by default for development. No additional setup required.
+```bash
+# JWT Secret (Generate: node -e "console.log(require('crypto').randomBytes(64).toString('hex'))")
+JWT_SECRET="your-super-secret-jwt-key"
 
-### Production (PostgreSQL)
-1. Create a PostgreSQL database
-2. Update `DATABASE_URL` in environment variables
-3. Run migrations: `npx prisma migrate deploy`
+# PostgreSQL Database URL
+DATABASE_URL="postgresql://username:password@host:port/database"
 
-## API Endpoints
+# Node Environment
+NODE_ENV="production"
+```
 
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User authentication
-- `POST /api/games/create` - Create new game
-- `POST /api/games/join` - Join existing game
-- `POST /api/games/move` - Make game move
-- `GET /api/games/available` - List available games
-- `GET /api/games/history` - Get game history
-- `GET /api/games/[id]` - Get game state
+### Database Setup
 
-## Contributing
+1. **Choose a PostgreSQL provider:**
+   - [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres)
+   - [Neon](https://neon.tech) (Free tier)
+   - [Supabase](https://supabase.com) (Free tier)
+   - [Railway](https://railway.app) (Free tier)
+
+2. **Run migrations:**
+   ```bash
+   npm run db:migrate
+   ```
+
+3. **Seed database (optional):**
+   ```bash
+   npm run db:seed
+   ```
+
+## 📚 Documentation
+
+- **[Production Guide](PRODUCTION.md)** - Comprehensive deployment instructions
+- **[Deployment Guide](DEPLOYMENT.md)** - Platform-specific deployment guides
+- **[Troubleshooting](TROUBLESHOOTING.md)** - Common issues and solutions
+
+## 🛠️ Available Scripts
+
+```bash
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+
+# Database
+npm run db:generate  # Generate Prisma client
+npm run db:migrate   # Run database migrations
+npm run db:seed      # Seed database
+npm run db:studio    # Open Prisma Studio
+npm run db:reset     # Reset database (dev only)
+
+# Docker
+npm run docker:build     # Build Docker image
+npm run docker:run       # Run Docker container
+npm run docker:compose   # Start with Docker Compose
+
+# Deployment
+npm run deploy:vercel    # Deploy to Vercel
+npm run deploy:railway   # Deploy to Railway
+npm run health          # Check application health
+```
+
+## 🏗️ Architecture
+
+### Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: PostgreSQL
+- **Authentication**: JWT tokens with bcrypt password hashing
+- **Deployment**: Vercel, Railway, Render, Docker
+
+### Project Structure
+
+```
+src/
+├── app/                 # Next.js App Router
+│   ├── api/            # API routes
+│   │   ├── auth/       # Authentication endpoints
+│   │   ├── games/      # Game management endpoints
+│   │   └── health/     # Health check endpoint
+│   ├── globals.css     # Global styles
+│   ├── layout.tsx      # Root layout
+│   └── page.tsx        # Main page
+├── components/         # React components
+│   ├── GameBoard.tsx   # Game board component
+│   ├── GameControls.tsx # Game controls
+│   ├── GameStatus.tsx  # Game status display
+│   ├── LoginForm.tsx   # Login form
+│   └── RegisterForm.tsx # Registration form
+├── lib/               # Utility libraries
+│   └── auth.ts        # Authentication utilities
+├── types/             # TypeScript type definitions
+│   └── game.ts        # Game-related types
+└── generated/         # Generated Prisma client
+```
+
+## 🔒 Security Features
+
+- **JWT Authentication** - Secure token-based authentication
+- **Password Hashing** - bcrypt with salt rounds
+- **Security Headers** - X-Frame-Options, X-Content-Type-Options, etc.
+- **Input Validation** - Server-side validation for all inputs
+- **SQL Injection Protection** - Prisma ORM prevents SQL injection
+- **CORS Protection** - Configured for production use
+
+## 🧪 Testing
+
+### Health Check
+
+Test your deployment:
+```bash
+npm run health
+# or visit: https://your-domain.com/api/health
+```
+
+### Manual Testing
+
+1. **Register/Login** - Create an account and log in
+2. **Create Game** - Start a new game
+3. **Join Game** - Join an existing game from another browser/device
+4. **Play Game** - Make moves and verify turn logic
+5. **Game History** - Check completed games in history
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📄 License
 
-MIT License - see LICENSE file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- **Documentation**: Check [PRODUCTION.md](PRODUCTION.md) for deployment help
+- **Issues**: Create an issue on GitHub
+- **Troubleshooting**: See [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+
+## 🎯 Roadmap
+
+- [ ] Real-time WebSocket support
+- [ ] Game rooms and lobbies
+- [ ] User profiles and statistics
+- [ ] Tournament mode
+- [ ] Mobile app
+- [ ] AI opponent
+- [ ] Custom game themes
+
+---
+
+**Happy Gaming! 🎮**
