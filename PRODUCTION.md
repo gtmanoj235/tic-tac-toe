@@ -9,9 +9,53 @@ This guide provides comprehensive instructions for deploying the Tic Tac Toe app
 # Install Vercel CLI
 npm i -g vercel
 
+# Set up environment variables
+./setup-vercel.sh
+
 # Deploy
 vercel --prod
 ```
+
+**Alternative Manual Setup:**
+1. **Visit Vercel Dashboard**:
+   - Go to [vercel.com](https://vercel.com)
+   - Sign up with your GitHub account
+
+2. **Create New Project**:
+   - Click "New Project"
+   - Import your GitHub repository
+   - Click "Deploy"
+
+3. **Configure Environment Variables**:
+   - Go to your project settings
+   - Navigate to "Environment Variables"
+   - Add the following variables:
+     ```
+     JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+     DATABASE_URL=your-postgresql-connection-string
+     NODE_ENV=production
+     ```
+
+4. **Set up PostgreSQL Database**:
+   - **Option A: Vercel Postgres** (Recommended)
+     - In your Vercel project, go to "Storage"
+     - Create a new Postgres database
+     - Copy the connection string to `DATABASE_URL`
+   
+   - **Option B: External PostgreSQL**
+     - Use [Neon](https://neon.tech) (free tier)
+     - Use [Supabase](https://supabase.com) (free tier)
+     - Use [Railway](https://railway.app) (free tier)
+
+5. **Run Database Migrations**:
+   ```bash
+   vercel env pull .env.local
+   npx prisma migrate deploy
+   ```
+
+6. **Redeploy**:
+   - Go to your Vercel dashboard
+   - Click "Redeploy" to apply environment variables
 
 ### 2. Railway
 ```bash
