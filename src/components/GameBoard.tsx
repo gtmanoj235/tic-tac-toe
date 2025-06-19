@@ -25,7 +25,6 @@ interface GameBoardProps {
 
 export default function GameBoard({ game, onMakeMove, currentUser }: GameBoardProps) {
   const isPlayerX = game.playerX?.id === currentUser.id;
-  const isPlayerO = game.playerO?.id === currentUser.id;
   const isMyTurn = () => {
     if (game.status !== 'in_progress') return false;
     if (!game.lastMove) return isPlayerX; // First move is always X
@@ -82,7 +81,7 @@ export default function GameBoard({ game, onMakeMove, currentUser }: GameBoardPr
         )}
         {game.status === 'in_progress' && (
           <p className="text-gray-600">
-            {isMyTurn() ? "Your turn" : "Opponent's turn"}
+            {isMyTurn() ? "Your turn" : "Opponent&apos;s turn"}
           </p>
         )}
         {game.status === 'finished' && (
@@ -92,7 +91,7 @@ export default function GameBoard({ game, onMakeMove, currentUser }: GameBoardPr
                 {game.winner === 'X' ? game.playerX?.username : game.playerO?.username} wins!
               </span>
             ) : (
-              <span className="text-gray-600">It's a draw!</span>
+              <span className="text-gray-600">It&apos;s a draw!</span>
             )}
           </div>
         )}

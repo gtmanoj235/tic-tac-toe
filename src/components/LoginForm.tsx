@@ -40,7 +40,7 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFormProp
       } else {
         setError(data.error || 'Login failed');
       }
-    } catch (error) {
+    } catch {
       setError('An error occurred during login');
     } finally {
       setLoading(false);
@@ -93,7 +93,7 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFormProp
           onClick={onSwitchToRegister}
           className="text-blue-500 hover:text-blue-600 text-sm"
         >
-          Don't have an account? Register
+          Don&apos;t have an account? Register
         </button>
       </div>
     </div>

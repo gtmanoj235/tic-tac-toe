@@ -52,7 +52,7 @@ export default function RegisterForm({ onLogin, onSwitchToLogin }: RegisterFormP
       } else {
         setError(data.error || 'Registration failed');
       }
-    } catch (error) {
+    } catch {
       setError('An error occurred during registration');
     } finally {
       setLoading(false);

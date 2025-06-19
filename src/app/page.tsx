@@ -6,6 +6,7 @@ import RegisterForm from '../components/RegisterForm';
 import GameBoard from '../components/GameBoard';
 import GameControls from '../components/GameControls';
 import GameStatus from '../components/GameStatus';
+import type { AvailableGame, GameHistoryItem } from '../types/game';
 
 interface User {
   id: string;
@@ -29,8 +30,8 @@ export default function Home() {
   const [token, setToken] = useState<string | null>(null);
   const [showRegister, setShowRegister] = useState(false);
   const [currentGame, setCurrentGame] = useState<Game | null>(null);
-  const [availableGames, setAvailableGames] = useState<any[]>([]);
-  const [gameHistory, setGameHistory] = useState<any[]>([]);
+  const [availableGames, setAvailableGames] = useState<AvailableGame[]>([]);
+  const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
 
   useEffect(() => {
     // Check for stored token on app load
@@ -68,7 +69,7 @@ export default function Home() {
     }, 3000); // Poll every 3 seconds
 
     return () => clearInterval(pollInterval);
-  }, [currentGame?.id, currentGame?.status, token]);
+  }, [currentGame, token]);
 
   // Poll for available games updates
   useEffect(() => {

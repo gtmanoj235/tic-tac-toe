@@ -1,14 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import type { AvailableGame, GameHistoryItem } from '../types/game';
 
 interface GameControlsProps {
   onCreateGame: () => void;
   onJoinGame: (gameId: string) => void;
   onLoadAvailableGames: () => void;
   onLoadGameHistory: () => void;
-  availableGames: any[];
-  gameHistory: any[];
+  availableGames: AvailableGame[];
+  gameHistory: GameHistoryItem[];
 }
 
 export default function GameControls({
