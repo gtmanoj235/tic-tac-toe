@@ -121,7 +121,7 @@ export default function RegisterForm({ onLogin, onSwitchToLogin }: RegisterFormP
             id="username"
             value={username}
             onChange={handleUsernameChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500 ${
               usernameError ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Enter username (lowercase, no spaces)"
@@ -140,7 +140,7 @@ export default function RegisterForm({ onLogin, onSwitchToLogin }: RegisterFormP
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
             placeholder="Enter password"
             required
           />
@@ -154,7 +154,7 @@ export default function RegisterForm({ onLogin, onSwitchToLogin }: RegisterFormP
             id="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
             placeholder="Confirm password"
             required
           />
