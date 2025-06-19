@@ -16,6 +16,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Convert username to lowercase for consistent comparison
+    const normalizedUsername = username.toLowerCase().trim();
+
     // Check if JWT_SECRET is set
     if (!process.env.JWT_SECRET) {
       console.error('JWT_SECRET environment variable is not set');
@@ -25,9 +28,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Find user
+    // Find user with lowercase username
     const user = await prisma.user.findUnique({
-      where: { username },
+      where: { username: normalizedUsername },
     });
 
     if (!user) {

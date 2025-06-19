@@ -16,6 +16,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Convert username to lowercase and trim
+    const normalizedUsername = username.toLowerCase().trim();
+
+    // Validate username
+    if (normalizedUsername.length < 3) {
+      return NextResponse.json(
+        { error: 'Username must be at least 3 characters long' },
+        { status: 400 }
+      );
+    }
+
+    if (normalizedUsername.length > 20) {
+      return NextResponse.json(
+        { error: 'Username must be less than 20 characters' },
+        { status: 400 }
+      );
+    }
+
+    if (normalizedUsername.includes(' ')) {
+      return NextResponse.json(
+        { error: 'Username cannot contain spaces' },
+        { status: 400 }
+      );
+    }
+
+    // Check for valid characters (alphanumeric and underscores only)
+    if (!/^[a-z0-9_]+$/.test(normalizedUsername)) {
+      return NextResponse.json(
+        { error: 'Username can only contain lowercase letters, numbers, and underscores' },
+        { status: 400 }
+      );
+    }
+
     // Check if JWT_SECRET is set
     if (!process.env.JWT_SECRET) {
       console.error('JWT_SECRET environment variable is not set');
@@ -25,9 +58,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if user already exists
+    // Check if user already exists (case-insensitive)
     const existingUser = await prisma.user.findUnique({
-      where: { username },
+      where: { username: normalizedUsername },
     });
 
     if (existingUser) {
@@ -40,10 +73,10 @@ export async function POST(request: NextRequest) {
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // Create user
+    // Create user with lowercase username
     const user = await prisma.user.create({
       data: {
-        username,
+        username: normalizedUsername,
         passwordHash,
       },
     });
