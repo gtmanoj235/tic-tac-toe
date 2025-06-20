@@ -111,7 +111,7 @@ export default function GameBoard({ game, onMakeMove, currentUser }: GameBoardPr
                 {game.winner === 'X' ? game.playerX?.username : game.playerO?.username} wins!
               </span>
             ) : (
-              <span className="text-gray-600">It's a draw!</span>
+              <span className="text-gray-600">It&apos;s a draw!</span>
             )}
           </div>
         )}

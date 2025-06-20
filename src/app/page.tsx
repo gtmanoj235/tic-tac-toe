@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import GameBoard from '../components/GameBoard';
@@ -33,6 +33,44 @@ export default function Home() {
   const [availableGames, setAvailableGames] = useState<AvailableGame[]>([]);
   const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
 
+  const loadAvailableGames = useCallback(async () => {
+    if (!token) return;
+
+    try {
+      const response = await fetch('/api/games/available', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAvailableGames(data.games);
+      }
+    } catch (error) {
+      console.error('Error loading available games:', error);
+    }
+  }, [token]);
+
+  const loadGameHistory = useCallback(async () => {
+    if (!token) return;
+
+    try {
+      const response = await fetch('/api/games/history', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setGameHistory(data.games);
+      }
+    } catch (error) {
+      console.error('Error loading game history:', error);
+    }
+  }, [token]);
+
   useEffect(() => {
     // Check for stored token on app load
     const storedToken = localStorage.getItem('token');
@@ -45,7 +83,7 @@ export default function Home() {
       loadAvailableGames();
       loadGameHistory();
     }
-  }, []);
+  }, [loadAvailableGames, loadGameHistory]);
 
   // Poll for game updates when there's a current game
   useEffect(() => {
@@ -223,44 +261,6 @@ export default function Home() {
     }
   };
 
-  const loadAvailableGames = async () => {
-    if (!token) return;
-
-    try {
-      const response = await fetch('/api/games/available', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setAvailableGames(data.games);
-      }
-    } catch (error) {
-      console.error('Error loading available games:', error);
-    }
-  };
-
-  const loadGameHistory = async () => {
-    if (!token) return;
-
-    try {
-      const response = await fetch('/api/games/history', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setGameHistory(data.games);
-      }
-    } catch (error) {
-      console.error('Error loading game history:', error);
-    }
-  };
-
   const refreshCurrentGame = async () => {
     if (!currentGame || !token) return;
 
@@ -365,4 +365,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+} 
